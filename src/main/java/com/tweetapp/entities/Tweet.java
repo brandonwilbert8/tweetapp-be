@@ -2,8 +2,13 @@ package com.tweetapp.entities;
 
 import java.util.List;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 
 @Document("tweet")
 public class Tweet {
@@ -11,6 +16,9 @@ public class Tweet {
 	@Id
 	private Integer tweetId;
 	
+	@Max(value = 144)
+	@NotBlank(message = "tweet Cannot be Blank.please enter tweet ")
+	@Pattern(regexp = "^[a-zA-Z0-9]")
 	private String tweet;
 
 	private String username;

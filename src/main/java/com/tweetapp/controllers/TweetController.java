@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tweetapp.dao.TweetRepository;
+import com.tweetapp.entities.Like;
 import com.tweetapp.entities.Tweet;
 import com.tweetapp.entities.User;
 import com.tweetapp.services.TweetService;
@@ -26,9 +27,6 @@ import com.tweetapp.services.UserService;
 @EnableMongoRepositories
 @CrossOrigin
 public class TweetController {
-
-	@Autowired
-	public TweetRepository tweetRepository;
 	
 	@Autowired
 	public TweetService tweetService;
@@ -60,21 +58,26 @@ public class TweetController {
 	public String updateTweet(@RequestBody Tweet tweet, @PathVariable String username, @PathVariable Integer tweetId) {
 		Tweet tweet1 = tweetService.getTweetById(tweetId);
 		tweet1.setTweet(tweet.getTweet());
-		tweetRepository.save(tweet1);
+		tweetService.save(tweet1);
 		return "updated tweet: " + tweetId;
 	}
 	
 	@DeleteMapping("/{username}/delete/{tweetId}")
 	public String deleteTweet(@PathVariable String username, @PathVariable Integer tweetId) {
-		tweetRepository.deleteById(tweetId);
+		tweetService.deleteById(tweetId);
 		return "deleted tweet with id: " + tweetId;
 	}
 	
 	@PutMapping("/{username}/like/{tweetId}")
-	public String likeTweet(@RequestBody Tweet tweet, @PathVariable String username, @PathVariable Integer tweetId) {
+	public String likeTweet(@PathVariable String username, @PathVariable Integer tweetId) {
 		Tweet tweet2 = tweetService.getTweetById(tweetId);
-		tweet2.setLike(tweet.getLike());
-		tweetRepository.save(tweet2);
+//		Like like = new Like();
+//		like.setNoOfLikes(tweet2.getLike().getNoOfLikes() + 1);
+//		List<String> existingLikedUsers = tweet2.getLike().getDetails();
+//		existingLikedUsers.add(username);
+//		like.setDetails(existingLikedUsers);
+		tweet2.setLike(4);
+		tweetService.save(tweet2);
 		return "liked tweet with id: " + tweetId;
 	}
 	
@@ -82,7 +85,7 @@ public class TweetController {
 	public String replyTweet(@RequestBody Tweet tweet, @PathVariable String username, @PathVariable Integer tweetId) {
 		Tweet tweet3 = tweetService.getTweetById(tweetId);
 		tweet3.setReplies(tweet.getReplies());
-		tweetRepository.save(tweet3);
+		tweetService.save(tweet3);
 		return "replied tweet with id: " + tweetId;
 	}
 }

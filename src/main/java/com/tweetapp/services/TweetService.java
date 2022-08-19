@@ -37,6 +37,14 @@ public class TweetService {
 		return tweetRepository.save(reply);
 	}
 	
+	public Tweet save(Tweet save) {
+		return tweetRepository.save(save);
+	}
+	
+	public void deleteById(Integer tweetId) {
+		tweetRepository.deleteById(tweetId);
+	}
+	
 	/*public Tweet findByid(Integer id) {
         if(id <= 0) {
             throw new IllegalArgumentException("Id is not valid, Please pass valid Id");
