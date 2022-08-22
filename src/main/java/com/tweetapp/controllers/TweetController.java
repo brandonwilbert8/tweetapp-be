@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -68,37 +67,9 @@ public class TweetController {
 		return "liked tweet with id: " + tweetId;
 	}
 
-
-
-	@PostMapping("/{username}/reply/{tweetId}")
-	public String replyTweet(@RequestBody Reply reply, @PathVariable String username, @PathVariable Integer tweetId) {
-		Tweet tweet3 = null;
-		try {
-			tweet3 = tweetService.getTweetById(tweetId);
-			List<Reply> replies = new ArrayList<>();
-			replies.add(reply);
-			tweet3.setReplies(replies);
-			tweetService.save(tweet3);
-			replyService.save(reply);
-
-		} catch(Exception ex) {
-				// reply to a reply not the main tweet
-				Reply replyTweet = replyService.getReplyById(tweetId);
-				List<Reply> replies = new ArrayList<>();
-				replies.add(reply);
-				replyTweet.setReplies(replies);
-				replyService.save(replyTweet);
-
-				Tweet mainTweet = tweetService.getTweetById(replyTweet.getTweetId());
-//				for ( Reply tweetReplies : mainTweet.getReplies()) {
-//					if (Objects.equals(tweetReplies.getReplyTweetId(), tweetId)) {
-//						Reply replyToSave = tweetReplies;
-//						replyToSave.getReplies().add(reply);
-//						mainTweet.getReplies().
-//						tweetService.save(mainTweet);
-//					}
-//				}
-			}
-		return "replied tweet with id: " + tweetId;
+	@PostMapping("/{username}/reply/{id}")
+	public String replyTweet(@RequestBody Reply reply, @PathVariable String username, @PathVariable Integer id) {
+		tweetService.replyTweet(reply, id);
+		return "replied tweet with id: " + id;
 	}
 }
