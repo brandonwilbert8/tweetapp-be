@@ -1,25 +1,16 @@
 package com.tweetapp.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.tweetapp.dao.TweetRepository;
-import com.tweetapp.entities.Like;
+import com.tweetapp.entities.Reply;
 import com.tweetapp.entities.Tweet;
-import com.tweetapp.entities.User;
+import com.tweetapp.services.ReplyService;
 import com.tweetapp.services.TweetService;
 import com.tweetapp.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -30,6 +21,9 @@ public class TweetController {
 	
 	@Autowired
 	public TweetService tweetService;
+
+	@Autowired
+	public ReplyService replyService;
 	
 	@Autowired
 	public UserService userService;
@@ -68,24 +62,43 @@ public class TweetController {
 		return "deleted tweet with id: " + tweetId;
 	}
 	
-	@PutMapping("/{username}/like/{tweetId}")
-	public String likeTweet(@PathVariable String username, @PathVariable Integer tweetId) {
-		Tweet tweet2 = tweetService.getTweetById(tweetId);
-//		Like like = new Like();
-//		like.setNoOfLikes(tweet2.getLike().getNoOfLikes() + 1);
-//		List<String> existingLikedUsers = tweet2.getLike().getDetails();
-//		existingLikedUsers.add(username);
-//		like.setDetails(existingLikedUsers);
-		tweet2.setLike(4);
-		tweetService.save(tweet2);
+	@PutMapping("/{username}/{action}/{tweetId}")
+	public String likeTweet(@PathVariable String username, @PathVariable String action, @PathVariable Integer tweetId) {
+		tweetService.actionTweet(username, tweetId, action);
 		return "liked tweet with id: " + tweetId;
 	}
-	
+
+
+
 	@PostMapping("/{username}/reply/{tweetId}")
-	public String replyTweet(@RequestBody Tweet tweet, @PathVariable String username, @PathVariable Integer tweetId) {
-		Tweet tweet3 = tweetService.getTweetById(tweetId);
-		tweet3.setReplies(tweet.getReplies());
-		tweetService.save(tweet3);
+	public String replyTweet(@RequestBody Reply reply, @PathVariable String username, @PathVariable Integer tweetId) {
+		Tweet tweet3 = null;
+		try {
+			tweet3 = tweetService.getTweetById(tweetId);
+			List<Reply> replies = new ArrayList<>();
+			replies.add(reply);
+			tweet3.setReplies(replies);
+			tweetService.save(tweet3);
+			replyService.save(reply);
+
+		} catch(Exception ex) {
+				// reply to a reply not the main tweet
+				Reply replyTweet = replyService.getReplyById(tweetId);
+				List<Reply> replies = new ArrayList<>();
+				replies.add(reply);
+				replyTweet.setReplies(replies);
+				replyService.save(replyTweet);
+
+				Tweet mainTweet = tweetService.getTweetById(replyTweet.getTweetId());
+//				for ( Reply tweetReplies : mainTweet.getReplies()) {
+//					if (Objects.equals(tweetReplies.getReplyTweetId(), tweetId)) {
+//						Reply replyToSave = tweetReplies;
+//						replyToSave.getReplies().add(reply);
+//						mainTweet.getReplies().
+//						tweetService.save(mainTweet);
+//					}
+//				}
+			}
 		return "replied tweet with id: " + tweetId;
 	}
 }
