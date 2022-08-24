@@ -31,10 +31,9 @@ public class UserController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> loginUser(@RequestBody User user) {
-//		if (!validateRequest(user)) {
-//			message =   "Unsuccessful";
-//			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-//		}
+		if (!validateRequest(user)) {
+			return new ResponseEntity<>("test", HttpStatus.BAD_REQUEST);
+		}
 		User currentUser = userService.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 		UserResponse userResponse = new UserResponse (true,  "Successfully logged in as: " + currentUser.getUsername());
 		return new ResponseEntity<>(userResponse, HttpStatus.OK);
