@@ -1,23 +1,16 @@
 package com.tweetapp.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.tweetapp.beans.UserResponse;
 import com.tweetapp.entities.User;
 import com.tweetapp.services.TweetService;
 import com.tweetapp.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1.0/tweets")
@@ -38,24 +31,14 @@ public class UserController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> loginUser(@RequestBody User user) {
-		String message = null;
-		if (!validateRequest(user)) {
-			message =   "Unsuccessful";
-			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-		}
-		
-		try {
+//		if (!validateRequest(user)) {
+//			message =   "Unsuccessful";
+//			return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+//		}
 		User currentUser = userService.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-		message =  "Successfully logged in as: " + currentUser.getUsername();
-		//UserResponse userResponse = new UserResponse (true, message);
-		return new ResponseEntity<>(message, HttpStatus.OK);
-		} 
-		catch(Exception e) {
-			UserResponse userResponse = new UserResponse (false, "username/password combination doesn't match");
-			message = "username/password combination doesn't match";
-			return new ResponseEntity<>(message, HttpStatus.OK); 
-		}
-		
+		UserResponse userResponse = new UserResponse (true,  "Successfully logged in as: " + currentUser.getUsername());
+		return new ResponseEntity<>(userResponse, HttpStatus.OK);
+
 	}
 	
 	@PostMapping("/register")

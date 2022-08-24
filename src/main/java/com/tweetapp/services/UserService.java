@@ -1,14 +1,14 @@
 package com.tweetapp.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.tweetapp.dao.TweetRepository;
 import com.tweetapp.dao.UserRepository;
 import com.tweetapp.entities.Tweet;
 import com.tweetapp.entities.User;
+import com.tweetapp.exception.UserNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -40,29 +40,17 @@ public class UserService {
 	}
 	
 	public User saveTweet(Tweet tweet, String username){
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
         user.getTweets().add(tweet);
         return userRepository.save(user);
     }
 
 	public User findByUsername(String username) {
-		return userRepository.findByUsername(username);
+		return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
 	}
 	
 	public User findByUsernameAndPassword(String username,String password) {
-		try {
-			return userRepository.findByUsernameAndPassword(username, password);
-			//if (user == null) throw UserNotFoundException("User not found");
-		}
-//		catch(UserNotFoundException e) {
-//			throw e;
-//		}
-		catch(Exception e) {
-			throw e;
-		}
+		return userRepository.findByUsernameAndPassword(username, password).orElseThrow(() -> new UserNotFoundException("User not found"));
 	}
-    /*public Set<Tweet> getTweets(String username){
-        User user = userRepository.findByUsername(username);
-        return user.getTweets();
-    }*/
 }
+

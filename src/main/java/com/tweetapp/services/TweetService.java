@@ -4,6 +4,7 @@ import com.tweetapp.dao.TweetRepository;
 import com.tweetapp.entities.Like;
 import com.tweetapp.entities.Reply;
 import com.tweetapp.entities.Tweet;
+import com.tweetapp.exception.TweetNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +25,9 @@ public class TweetService {
 	}
 	
 	public Tweet getTweetById(Integer tweetId) {
-		return tweetRepository.findById(tweetId).get();
+		return tweetRepository.findById(tweetId).orElseThrow(() -> new TweetNotFoundException("Tweet not found"));
 	}
-	
+
 	public List<Tweet> getAllTweets() {
 		return tweetRepository.findAll();
 	}
@@ -65,7 +66,7 @@ public class TweetService {
 		try {
 			mainTweet = getTweetById(id);
 			unLikeTweet(username, mainTweet);
-		}	catch(Exception ex) {
+		}	catch(TweetNotFoundException ex) {
 			Reply replyTweet = replyService.getReplyById(id);
 			mainTweet = getTweetById(replyTweet.getTweetId());
 			Reply replyToReplace = mainTweet.getReplies().stream().filter(
@@ -94,7 +95,7 @@ public class TweetService {
 		try {
 		mainTweet = getTweetById(id);
 		likeTweet(username, mainTweet);
-		}	catch(Exception ex) {
+		}	catch(TweetNotFoundException ex) {
 			Reply replyTweet = replyService.getReplyById(id);
 			mainTweet = getTweetById(replyTweet.getTweetId());
 			Reply replyToReplace = mainTweet.getReplies().stream().filter(
@@ -150,7 +151,7 @@ public class TweetService {
 			save(mainTweet);
 			replyService.save(reply);
 
-		} catch(Exception ex) {
+		} catch(TweetNotFoundException ex) {
 			// reply to a reply not the main tweet
 			Reply replyTweet = replyService.getReplyById(id);
 			mainTweet = getTweetById(replyTweet.getTweetId());
