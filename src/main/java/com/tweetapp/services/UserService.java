@@ -1,8 +1,6 @@
 package com.tweetapp.services;
 
-import com.tweetapp.dao.TweetRepository;
 import com.tweetapp.dao.UserRepository;
-import com.tweetapp.entities.Tweet;
 import com.tweetapp.entities.User;
 import com.tweetapp.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +13,6 @@ public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
-	
-	@Autowired
-	TweetRepository tweetRepository;
 	
 	public User createUser(User user) {
 		return userRepository.save(user);
@@ -39,11 +34,11 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
-	public User saveTweet(Tweet tweet, String username){
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
-        user.getTweets().add(tweet);
-        return userRepository.save(user);
-    }
+//	public User saveTweet(Tweet tweet, String username){
+//        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
+//        user.getTweets().add(tweet);
+//        return userRepository.save(user);
+//    }
 
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -53,8 +48,8 @@ public class UserService {
 		return userRepository.findByUsernameAndPassword(username, password).orElseThrow(() -> new UserNotFoundException("User not found"));
 	}
 
-//	public List<User> findByUsernameAutocomplete(String username) {
-//		return userRepository.findByUsernameAuto(username);
-//	}
+	public List<User> findEveryUsername(String username) {
+		return userRepository.findByUsernameIsLike(username);
+	}
 }
 

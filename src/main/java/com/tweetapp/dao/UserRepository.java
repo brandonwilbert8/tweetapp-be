@@ -13,14 +13,12 @@ public interface UserRepository extends MongoRepository<User, String> {
 	@Override
 	public List<User> findAll();
 
-//	public List<User> findByUsernameAuto(String username);
-	
 	Optional<User> findById(String userId);
 
 	Optional<User> findByUsername(String username);
-	
-	Optional<User> findByPassword(String password);
-	
+
 	Optional<User> findByUsernameAndPassword(String username, String password);
+
+	List<User> findByUsernameIsLike (String username);
 
 }
