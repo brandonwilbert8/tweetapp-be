@@ -52,5 +52,9 @@ public class UserService {
 	public User findByUsernameAndPassword(String username,String password) {
 		return userRepository.findByUsernameAndPassword(username, password).orElseThrow(() -> new UserNotFoundException("User not found"));
 	}
+
+//	public List<User> findByUsernameAutocomplete(String username) {
+//		return userRepository.findByUsernameAuto(username);
+//	}
 }
 

@@ -1,8 +1,7 @@
 package com.tweetapp.services;
 
-import java.util.Arrays;
-import java.util.List;
-
+import com.tweetapp.dao.UserRepository;
+import com.tweetapp.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,8 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.tweetapp.dao.UserRepository;
-import com.tweetapp.entities.User;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @EnableMongoRepositories
@@ -24,7 +24,7 @@ public class MongoUserDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		User user = userRepository.findByUsername(username);
+		Optional<User> user = userRepository.findByUsername(username);
 		
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found!");

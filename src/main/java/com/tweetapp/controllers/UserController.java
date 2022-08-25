@@ -45,10 +45,10 @@ public class UserController {
 		return userService.createUser(user);
 	}
 	
-	@GetMapping("/user/search/{username}")
-	public User getUserDetails(@PathVariable final String username) {
-		return userService.findByUsername(username);
-	}
+//	@GetMapping("/user/search/{username}")
+//	public User getUserDetails(@PathVariable final String username) {
+//		return userService.findByUsername(username);
+//	}
 	
 	@GetMapping("/{username}/forgot")
 	public String getPassword(@PathVariable final String username) {
@@ -59,4 +59,9 @@ public class UserController {
 	private boolean validateRequest(User user) {
 		return true;
 	}
+
+//	@GetMapping("/user/search/{username}")
+//	public List<User> getUserDetails(@PathVariable String username) {
+//		return userService.findByUsernameAutocomplete(username);
+//	}
 }
