@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1.0/tweets")
@@ -60,4 +61,13 @@ public class UserController {
 		return userService.findEveryUsername(username);
 	}
 
+	@GetMapping("/user/check/{username}")
+	public Optional<User> checkUsername(@PathVariable final String username) {
+		return userService.checkUsernameExists(username);
+	}
+
+	@GetMapping("/user/email/{email}")
+	public Optional<User> checkEmail(@PathVariable final String email) {
+		return userService.checkEmailExists(email);
+	}
 }

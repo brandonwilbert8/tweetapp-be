@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -50,6 +51,14 @@ public class UserService {
 
 	public List<User> findEveryUsername(String username) {
 		return userRepository.findByUsernameIsLike(username);
+	}
+
+	public Optional<User> checkUsernameExists(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	public Optional<User> checkEmailExists(String email) {
+		return userRepository.findByEmail(email);
 	}
 }
 
