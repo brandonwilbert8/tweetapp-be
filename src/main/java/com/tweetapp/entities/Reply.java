@@ -25,7 +25,8 @@ public class Reply {
     private String username;
     private Like like;
     private List<Reply> replies;
+    @Max(value = 50)
     private String tag;
-//    @Temporal(TemporalType.TIMESTAMP)
-//	private Date createTweetDate;
+    private String postedReplyDate;
+    private String postedReplyTime;
 }

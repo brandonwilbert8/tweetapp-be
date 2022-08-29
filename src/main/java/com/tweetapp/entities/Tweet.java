@@ -26,7 +26,8 @@ public class Tweet {
 	private String username;
 	private Like like;
 	private List<Reply> replies;
+	@Max(value = 50)
 	private String tag;
-//	@Temporal(TemporalType.TIMESTAMP)
-//	private Date createTweetDate;
+	private String postedTweetDate;
+	private String postedTweetTime;
 }
