@@ -46,10 +46,12 @@ public class UserController {
 		return userService.createUser(user);
 	}
 
-	@GetMapping("/{username}/forgot")
-	public String getPassword(@PathVariable final String username) {
+	@PutMapping("/{username}/forgot")
+	public String getPassword(@PathVariable final String username, @RequestBody User user) {
 		User currentUser = userService.findByUsername(username);
-		return "password: " + currentUser.getPassword();
+		currentUser.setPassword(user.getPassword());
+		userService.createUser(currentUser);
+		return "Successfully reset password for: " + currentUser.getUsername();
 	}
 	
 	private boolean validateRequest(User user) {

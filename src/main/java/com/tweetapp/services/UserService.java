@@ -60,5 +60,6 @@ public class UserService {
 	public Optional<User> checkEmailExists(String email) {
 		return userRepository.findByEmail(email);
 	}
+
 }
 
