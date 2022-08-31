@@ -1,16 +1,15 @@
 package com.tweetapp;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
+import lombok.Generated;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-
-import com.tweetapp.dao.UserRepository;
-import com.tweetapp.entities.User;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableMongoRepositories
+@Generated
+@EnableWebMvc
 public class TweetappApplication {
 	
 	public static void main(String[] args) {
