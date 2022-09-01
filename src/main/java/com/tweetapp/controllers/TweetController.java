@@ -67,7 +67,7 @@ public class TweetController {
 	@DeleteMapping("/{username}/delete/{tweetId}")
 	public String deleteTweet(@PathVariable String username, @PathVariable Integer tweetId) {
 		log.info("Deleting tweet: {}", tweetId);
-		producer.sendMessage("delete");
+		//producer.sendMessage("delete");
 		tweetService.deleteById(tweetId);
 		return "deleted tweet with id: " + tweetId;
 	}
