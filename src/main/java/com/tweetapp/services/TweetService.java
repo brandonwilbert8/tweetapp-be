@@ -5,6 +5,7 @@ import com.tweetapp.entities.Like;
 import com.tweetapp.entities.Reply;
 import com.tweetapp.entities.Tweet;
 import com.tweetapp.exception.TweetNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class TweetService {
 
 	@Autowired
@@ -21,18 +23,22 @@ public class TweetService {
 	ReplyService replyService;
 	
 	public Tweet createTweet(Tweet tweet) {
+		log.info("Creating a tweet: {} - by TweetService", tweet.getTweetId());
 		return tweetRepository.save(tweet);
 	}
 	
 	public Tweet getTweetById(Integer tweetId) {
+		log.info("Getting a tweet by id: {} - by TweetService", tweetId);
 		return tweetRepository.findById(tweetId).orElseThrow(() -> new TweetNotFoundException("Tweet not found"));
 	}
 
 	public List<Tweet> getAllTweets() {
+		log.info("Getting all tweets from repository - by TweetService");
 		return tweetRepository.findAll();
 	}
 	
 	public List<Tweet> getTweetsFromUsername(String username) {
+		log.info("Getting all tweets from user: {} - by TweetService", username);
 		return tweetRepository.findByUsername(username);
 	}
 	
@@ -41,24 +47,29 @@ public class TweetService {
 	}
 	
 	public Tweet save(Tweet save) {
+		log.info("Saving a tweet - by TweetService");
 		return tweetRepository.save(save);
 	}
 	
 	public void deleteById(Integer tweetId) {
+		log.info("Deleting a tweet of id: {}", tweetId);
 		tweetRepository.deleteById(tweetId);
 	}
 
 	public void actionTweet(String username, Integer id, String action) {
-		
+		log.info("Performing actionTweet - by TweetService");
 		switch (action) {
-			case "like": likeTweet(username, id);
-			             break;
-			case "unlike": unLikeTweet(username, id);
-							break;
+			case "like":
+				log.info("Liking a tweet of id: {}", id);
+				likeTweet(username, id);
+				break;
+			case "unlike":
+				log.info("Unliking a tweet of id: {}", id);
+				unLikeTweet(username, id);
+				break;
 			default:
-						break;
+				break;
 		}
-		
 	}
 
 	private void unLikeTweet(String username, Integer id) {
