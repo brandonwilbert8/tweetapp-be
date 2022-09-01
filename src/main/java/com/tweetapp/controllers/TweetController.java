@@ -2,6 +2,7 @@ package com.tweetapp.controllers;
 
 import com.tweetapp.entities.Reply;
 import com.tweetapp.entities.Tweet;
+import com.tweetapp.producer.Producer;
 import com.tweetapp.services.ReplyService;
 import com.tweetapp.services.TweetService;
 import com.tweetapp.services.UserService;
@@ -22,6 +23,7 @@ public class TweetController {
 	
 	@Autowired
 	public TweetService tweetService;
+	public Producer producer;
 
 	@Autowired
 	public ReplyService replyService;
@@ -65,6 +67,7 @@ public class TweetController {
 	@DeleteMapping("/{username}/delete/{tweetId}")
 	public String deleteTweet(@PathVariable String username, @PathVariable Integer tweetId) {
 		log.info("Deleting tweet: {}", tweetId);
+		producer.sendMessage("delete");
 		tweetService.deleteById(tweetId);
 		return "deleted tweet with id: " + tweetId;
 	}
