@@ -8,17 +8,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ConsumerService {
-    private final TweetService tweetService;
+    private final TweetRepository tweetRepository;
 
-        public ConsumerService(TweetService tweetService) {
-        this.tweetService = tweetService;
+    public ConsumerService(TweetRepository tweetRepository) {
+        this.tweetRepository = tweetRepository;
     }
 
-    @KafkaListener(topics = "rest-spring-boot-integration", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "tweet-operation", containerFactory = "kafkaListenerContainerFactory")
     public void consume(String message) {
-//        Tweet tweet = new Tweet();
-//        if (message.equals("delete")) {
-//            tweetService.deleteById(tweet.getTweetId());
-//        }
+        System.out.println("Consumed message: " + message);
     }
 }
