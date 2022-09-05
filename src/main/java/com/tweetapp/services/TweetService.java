@@ -5,6 +5,7 @@ import com.tweetapp.entities.Like;
 import com.tweetapp.entities.Reply;
 import com.tweetapp.entities.Tweet;
 import com.tweetapp.exception.TweetNotFoundException;
+import com.tweetapp.producer.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class TweetService {
 
 	@Autowired
     TweetRepository tweetRepository;
+
+	@Autowired
+	public Producer producer;
 
 	@Autowired
 	ReplyService replyService;
@@ -53,6 +57,7 @@ public class TweetService {
 	
 	public void deleteById(Integer tweetId) {
 		log.info("Deleting a tweet of id: {}", tweetId);
+		producer.sendMessage("delete");
 		tweetRepository.deleteById(tweetId);
 	}
 

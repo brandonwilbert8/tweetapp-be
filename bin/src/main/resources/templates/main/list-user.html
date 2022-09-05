@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace="layouts :: head"> 
+	</head>
+	
+	<body>
+	
+	<nav th:replace="layouts :: navbar"></nav>
+
+		<div class="container">
+			<h3>Users Directory</h3>
+			<hr>
+			
+			<!--  Add New Project Button -->
+			<a th:href="@{/}"
+				class="btn btn-primary btn-sm mb-3"> 
+				New User 
+			</a>
+			<table class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Email</th>
+					</tr>
+				</thead>		
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td th:text="${user.firstName}"/>
+						<td th:text="${user.lastName}"/>
+						<td th:text="${user.email}"/>
+					</tr>
+				</tbody>
+			
+			</table>
+		</div>
+	</body>
+	
+</html>
