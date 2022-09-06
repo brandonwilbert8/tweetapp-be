@@ -21691,4 +21691,16 @@ Caused by: java.net.SocketTimeoutException: Read timed out
 ""2022-09-06 13:50:27 [SpringApplicationShutdownHook] INFO  o.a.kafka.common.metrics.Metrics - Closing reporter org.apache.kafka.common.metrics.JmxReporter
 ""2022-09-06 13:50:27 [SpringApplicationShutdownHook] INFO  o.a.kafka.common.metrics.Metrics - Metrics reporters closed
 ""2022-09-06 13:50:27 [SpringApplicationShutdownHook] INFO  o.a.kafka.common.utils.AppInfoParser - App info kafka.producer for producer-1 unregistered
+""2022-09-06 13:54:11 [main] INFO  c.tweetapp.TweetappApplicationTests - Starting TweetappApplicationTests using Java 18.0.1 on AMBAU001025 with PID 77732 (started by m_brandon in /Users/m_brandon/Documents/TweetApp_BackEnd)
+""2022-09-06 13:54:11 [main] DEBUG c.tweetapp.TweetappApplicationTests - Running with Spring Boot v2.7.2, Spring v5.3.22
+""2022-09-06 13:54:11 [main] INFO  c.tweetapp.TweetappApplicationTests - No active profile set, falling back to 1 default profile: "default"
+""2022-09-06 13:54:11 [main] INFO  c.tweetapp.TweetappApplicationTests - Started TweetappApplicationTests in 0.24 seconds (JVM running for 0.769)
+""2022-09-06 14:04:01 [main] INFO  c.tweetapp.TweetappApplicationTests - Starting TweetappApplicationTests using Java 18.0.1 on AMBAU001025 with PID 91105 (started by m_brandon in /Users/m_brandon/Documents/TweetApp_BackEnd)
+""2022-09-06 14:04:01 [main] DEBUG c.tweetapp.TweetappApplicationTests - Running with Spring Boot v2.7.2, Spring v5.3.22
+""2022-09-06 14:04:01 [main] INFO  c.tweetapp.TweetappApplicationTests - No active profile set, falling back to 1 default profile: "default"
+""2022-09-06 14:04:02 [main] INFO  c.tweetapp.TweetappApplicationTests - Started TweetappApplicationTests in 0.24 seconds (JVM running for 0.768)
+""2022-09-06 14:11:04 [main] INFO  c.tweetapp.TweetappApplicationTests - Starting TweetappApplicationTests using Java 18.0.1 on AMBAU001025 with PID 97652 (started by m_brandon in /Users/m_brandon/Documents/TweetApp_BackEnd)
+""2022-09-06 14:11:04 [main] DEBUG c.tweetapp.TweetappApplicationTests - Running with Spring Boot v2.7.2, Spring v5.3.22
+""2022-09-06 14:11:04 [main] INFO  c.tweetapp.TweetappApplicationTests - No active profile set, falling back to 1 default profile: "default"
+""2022-09-06 14:11:04 [main] INFO  c.tweetapp.TweetappApplicationTests - Started TweetappApplicationTests in 0.258 seconds (JVM running for 0.751)
 "
