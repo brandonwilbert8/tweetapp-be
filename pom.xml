@@ -123,6 +123,7 @@
 				<version>3.7.1</version>
 			</plugin>
 		</plugins>
+		<finalName>tweetapp</finalName>
 	</build>
 
 	<reporting>
