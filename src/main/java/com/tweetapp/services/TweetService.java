@@ -57,8 +57,7 @@ public class TweetService {
 	
 	public void deleteById(Integer tweetId) {
 		log.info("Deleting a tweet of id: {}", tweetId);
-		producer.sendMessage("delete");
-		tweetRepository.deleteById(tweetId);
+		producer.sendMessage(tweetId);
 	}
 
 	public void actionTweet(String username, Integer id, String action) {

@@ -1,12 +1,12 @@
 package com.tweetapp.consumer;
 
 import com.tweetapp.dao.TweetRepository;
-import com.tweetapp.entities.Tweet;
-import com.tweetapp.services.TweetService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class ConsumerService {
     private final TweetRepository tweetRepository;
 
@@ -15,7 +15,9 @@ public class ConsumerService {
     }
 
     @KafkaListener(topics = "tweet-operation", containerFactory = "kafkaListenerContainerFactory")
-    public void consume(String message) {
-        System.out.println("Consumed message: " + message);
+    public void consume(Integer tweetId) {
+        System.out.println("Consumed tweetId: " + tweetId);
+        log.info("Deleting tweet by Kafka: {}", tweetId);
+        tweetRepository.deleteById(tweetId);
     }
 }
