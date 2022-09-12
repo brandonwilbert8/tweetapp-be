@@ -64,6 +64,8 @@ mvn clean install
     * Added prometheus
     * Added grafana
     * This branch is up to date with branch **master**
+* without_kafka
+    * identical to branch docker_latest, just without kafka, for cloud deployment
 
 ## Local Port details
 
