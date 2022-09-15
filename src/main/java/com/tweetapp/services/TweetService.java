@@ -5,7 +5,6 @@ import com.tweetapp.entities.Like;
 import com.tweetapp.entities.Reply;
 import com.tweetapp.entities.Tweet;
 import com.tweetapp.exception.TweetNotFoundException;
-import com.tweetapp.producer.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,8 @@ public class TweetService {
 	@Autowired
     TweetRepository tweetRepository;
 
-	@Autowired
-	public Producer producer;
+//	@Autowired
+//	public Producer producer;
 
 	@Autowired
 	ReplyService replyService;
@@ -31,7 +30,7 @@ public class TweetService {
 		return tweetRepository.save(tweet);
 	}
 	
-	public Tweet getTweetById(Integer tweetId) {
+	public Tweet getTweetById(String tweetId) {
 		log.info("Getting a tweet by id: {} - by TweetService", tweetId);
 		return tweetRepository.findById(tweetId).orElseThrow(() -> new TweetNotFoundException("Tweet not found"));
 	}
@@ -55,12 +54,12 @@ public class TweetService {
 		return tweetRepository.save(save);
 	}
 	
-	public void deleteById(Integer tweetId) {
+	public void deleteById(String tweetId) {
 		log.info("Deleting a tweet of id: {}", tweetId);
-		producer.sendMessage(tweetId);
+		tweetRepository.deleteById(tweetId);
 	}
 
-	public void actionTweet(String username, Integer id, String action) {
+	public void actionTweet(String username, String id, String action) {
 		log.info("Performing actionTweet - by TweetService");
 		switch (action) {
 			case "like":
@@ -76,7 +75,7 @@ public class TweetService {
 		}
 	}
 
-	private void unLikeTweet(String username, Integer id) {
+	private void unLikeTweet(String username, String id) {
 		Tweet mainTweet = null;
 		try {
 			mainTweet = getTweetById(id);
@@ -105,7 +104,7 @@ public class TweetService {
 		mainTweet.getLike().setDetails(existingLikedUsers);
 	}
 
-	private void likeTweet(String username, Integer id) {
+	private void likeTweet(String username, String id) {
 		Tweet mainTweet = null;
 		try {
 		mainTweet = getTweetById(id);
@@ -152,7 +151,7 @@ public class TweetService {
 		mainTweet.setLike(like);
 	}
 
-	public void replyTweet(Reply reply, Integer id) {
+	public void replyTweet(Reply reply, String id) {
 		Tweet mainTweet = null;
 		try {
 			mainTweet = getTweetById(id);
