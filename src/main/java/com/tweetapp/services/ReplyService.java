@@ -12,7 +12,7 @@ public class ReplyService {
     @Autowired
     ReplyRepository replyRepository;
 
-    public Reply getReplyById(Integer replyId) {
+    public Reply getReplyById(String replyId) {
         return replyRepository.findById(replyId).orElseThrow(() -> new ReplyNotFoundException("Cannot identify the tweet/reply"));
     }
     public Reply save(Reply save) {

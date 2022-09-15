@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ReplyRepository extends MongoRepository<Reply,Integer> {
+public interface ReplyRepository extends MongoRepository<Reply,String> {
 
 }

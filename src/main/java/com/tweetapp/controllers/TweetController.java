@@ -42,7 +42,7 @@ public class TweetController {
 	}
 	
 	@GetMapping("/{username}/{tweetId}")
-	public Tweet getUserTweetById(@PathVariable String username, @PathVariable Integer tweetId) {
+	public Tweet getUserTweetById(@PathVariable String username, @PathVariable String tweetId) {
 		log.info("Getting a tweet of ID {}", tweetId);
 		return tweetService.getTweetById(tweetId);
 	}
@@ -54,7 +54,7 @@ public class TweetController {
 	}
 	
 	@PutMapping("/{username}/update/{tweetId}")
-	public String updateTweet(@RequestBody Tweet tweet, @PathVariable String username, @PathVariable Integer tweetId) {
+	public String updateTweet(@RequestBody Tweet tweet, @PathVariable String username, @PathVariable String tweetId) {
 		log.info("Updating tweet: {}", tweetId);
 		Tweet tweet1 = tweetService.getTweetById(tweetId);
 		tweet1.setTweet(tweet.getTweet());
@@ -63,21 +63,21 @@ public class TweetController {
 	}
 	
 	@DeleteMapping("/{username}/delete/{tweetId}")
-	public String deleteTweet(@PathVariable String username, @PathVariable Integer tweetId) {
+	public String deleteTweet(@PathVariable String username, @PathVariable String tweetId) {
 		log.info("Deleting tweet: {}", tweetId);
 		tweetService.deleteById(tweetId);
 		return "deleted tweet with id: " + tweetId;
 	}
 	
 	@PutMapping("/{username}/{action}/{tweetId}")
-	public String likeTweet(@PathVariable String username, @PathVariable String action, @PathVariable Integer tweetId) {
+	public String likeTweet(@PathVariable String username, @PathVariable String action, @PathVariable String tweetId) {
 		log.info("Liking tweet: {}", tweetId);
 		tweetService.actionTweet(username, tweetId, action);
 		return "liked tweet with id: " + tweetId;
 	}
 
 	@PostMapping("/{username}/reply/{id}")
-	public String replyTweet(@RequestBody Reply reply, @PathVariable String username, @PathVariable Integer id) {
+	public String replyTweet(@RequestBody Reply reply, @PathVariable String username, @PathVariable String id) {
 		log.info("Replying to tweet: {}", id);
 		tweetService.replyTweet(reply, id);
 		return "replied tweet with id: " + id;

@@ -30,7 +30,7 @@ public class TweetService {
 		return tweetRepository.save(tweet);
 	}
 	
-	public Tweet getTweetById(Integer tweetId) {
+	public Tweet getTweetById(String tweetId) {
 		log.info("Getting a tweet by id: {} - by TweetService", tweetId);
 		return tweetRepository.findById(tweetId).orElseThrow(() -> new TweetNotFoundException("Tweet not found"));
 	}
@@ -54,12 +54,12 @@ public class TweetService {
 		return tweetRepository.save(save);
 	}
 	
-	public void deleteById(Integer tweetId) {
+	public void deleteById(String tweetId) {
 		log.info("Deleting a tweet of id: {}", tweetId);
 		tweetRepository.deleteById(tweetId);
 	}
 
-	public void actionTweet(String username, Integer id, String action) {
+	public void actionTweet(String username, String id, String action) {
 		log.info("Performing actionTweet - by TweetService");
 		switch (action) {
 			case "like":
@@ -75,7 +75,7 @@ public class TweetService {
 		}
 	}
 
-	private void unLikeTweet(String username, Integer id) {
+	private void unLikeTweet(String username, String id) {
 		Tweet mainTweet = null;
 		try {
 			mainTweet = getTweetById(id);
@@ -104,7 +104,7 @@ public class TweetService {
 		mainTweet.getLike().setDetails(existingLikedUsers);
 	}
 
-	private void likeTweet(String username, Integer id) {
+	private void likeTweet(String username, String id) {
 		Tweet mainTweet = null;
 		try {
 		mainTweet = getTweetById(id);
@@ -151,7 +151,7 @@ public class TweetService {
 		mainTweet.setLike(like);
 	}
 
-	public void replyTweet(Reply reply, Integer id) {
+	public void replyTweet(Reply reply, String id) {
 		Tweet mainTweet = null;
 		try {
 			mainTweet = getTweetById(id);
