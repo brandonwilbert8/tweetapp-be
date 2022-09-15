@@ -1,7 +1,7 @@
 {
 	"AWSEBDockerrunVersion": "1",
 	"Image": {
-		"Name": "brandonwilbert/dockerhub:myfirstimagepush",
+		"Name": "brandonwilbert/dockerhub:2.0.0.RELEASE",
 		"Update": "true"
 	},
 	"Ports": [
