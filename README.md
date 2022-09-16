@@ -66,6 +66,9 @@ mvn clean install
     * This branch is up to date with branch **master**
 * without_kafka
     * identical to branch docker_latest, just without kafka, for cloud deployment
+* testing
+    * modified @id for both tweet and reply objects
+    * adjustments on controller, service, and repository
 
 ## Local Port details
 
