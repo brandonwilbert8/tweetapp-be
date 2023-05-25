@@ -1,10 +1,10 @@
-# TweetApp_BackEnd - Spring Boot Application
+# TweetApp BackEnd 🐦
 
-## Description
+## Description 📝
 
 MC1 Backend - Spring Boot Application for FSE1 Accreditation
 
-## Getting Started
+## Getting Started 🎉
 
 ### Dependencies
 
@@ -42,11 +42,11 @@ mvn clean install
 
 **Notes: need to adjust IP address for kafka (on application.properties) and prometheus (prometheus.yml) when necessary**
 
-## Author
+## Author 🙋‍♂️
 
 * Brandon Wilbert [brandon.wilbert@cognizant.com]
 
-## Branch Details
+## Branch Details 💾
 
 * develop
     * Initial Release
